@@ -1,0 +1,196 @@
+{% extends "ventas/base.html" %}
+{% load static %}
+{% block head_content %} 
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+<link rel="stylesheet" href='{% static "css/crm_phone.css" %}'>
+<link rel="stylesheet" href='{% static "css/crm_desktop.css" %}' media="(min-width: 860px)">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+
+<title>Crear prospecto | Yee Solutions</title>
+{% endblock %}
+
+{% block container %}
+<section class="super-container">
+    
+    <div class="container-main hg">
+        <section class="container_first form-ct">
+            <form action="" class="form-ct__background row g-3" method="POST">
+
+                {% csrf_token %}
+
+                <input type="hidden" class="form-control-plaintext text-center" name="vendedor" required value="{{ user.id }}">
+                <div class="col-12">
+                    <label for="id_nombre_comercial" class="form-label wd-full">Nombre del comercio: <b class="alert-form">*</b></label>
+                    <input 
+                    label="nombre_comercial"
+                    id = "id_nombre_comercial"
+                    onkeyup = "javascript:this.value=this.value.toUpperCase();"
+                    autocomplete="off"
+                    value="" 
+                    class="form-control" 
+                    name="nombre_comercial"
+                    >    
+                </div>
+
+                <div class="invalid-feedback">
+                {{ form.nombre_comercial.errors }}
+                </div>
+
+
+
+                <div class="col-12">
+                    <label for="razon_social" class="form-label wd-full">Razón Social: </label>
+                    <input 
+                    onkeyup = "javascript:this.value=this.value.toUpperCase();"
+                    autocomplete="off" 
+                    class="form-control" 
+                    value=""
+                    name="razon_social">
+
+
+                    <p class="font-form font-alert-opcion">{{ form.razon_social.errors }}</p>
+
+                    <p class="font-form font-alert-opcion">Opcional</p>
+
+
+                </div>
+                <div class="col-12">
+                    <label for="rfc" class="form-label wd-full">RFC: </label>
+                    <input 
+                    onkeyup = "javascript:this.value=this.value.toUpperCase();"
+                    autocomplete="off" 
+                    class="form-control"
+                    value="" 
+                    name="rfc">
+                <div class="invalid-feedback">
+                    {% if form.actividad_principal.errors %}
+                        <p class="font-form font-alert-opcion">Opcional</p>
+                    {% else %}
+                        {{ form.rfc.errors }}
+                    {% endif %}
+                </div>                    
+                <div class="col-12">
+                    <label for="actividad_principal" class="form-label wd-full">Actividad principal:</label>
+                    <select 
+                    autocomplete="off" 
+                    name="actividad_principal">
+                        <option value="" selected disabled hidden>SELECCIONA UNA OPCIÓN</option>
+                        <option value="mayorista">MAYORISTA</option>
+                        <option value="venta al detalle">VENTA AL DETALLE</option>
+                        <option value="proyectos">PROYECTOS</option>
+                        <option value="mostrador">MOSTRADOR</option>
+                        <option value="otros">OTROS</option>
+                    </select>
+                <div class="invalid-feedback">
+                    {% if form.actividad_principal.errors %}
+                        <p class="font-form font-alert-opcion">Opcional</p>
+                    {% else %}
+                        {{ form.actividad_principal.errors }}
+                    {% endif %}
+                </div>
+                </div>
+                
+                <div class="col-12">
+                    <label for="giro" class="form-label wd-full">Giro:</label>
+                    <select 
+                    autocomplete="off" 
+                    name="giro">
+                        <option value="" selected disabled hidden>SELECCIONA UNA OPCIÓN</option>
+                        <option value="material electrico">MATERIAL ELÉCTRICO</option>
+                        <option value="tienda iluminacion">TIENDA DE ILUMINACIÓN</option>
+                        <option value="eco tecnologias">ECO TECNOLOGÍAS</option>
+                        <option value="ferre flectricos">FERRÉ ELÉCTRICOS</option>
+                        <option value="otros">OTROS</option>
+                    </select>
+                <div class="invalid-feedback">
+
+                    {% if form.giro.errors %}
+                        <p class="font-form font-alert-opcion">Opcional</p>
+                    {% else %}
+                        {{ form.giro.errors }}
+                    {% endif %}
+
+                </div>
+                </div>
+                <div class="col-12">
+                    <label class="form-label wd-full">Marcas:</label>
+                </div>
+                <div style="display: contents;" class="col-12">
+                    <div class="cont-check">
+                        <label for="igoto" class="form-label check-size"><input value="true" id="igoto" name="igoto" type="checkbox">  IGOTO</label>
+                    </div>
+                    <div class="cont-check">
+                        <label for="geo_power" class="form-label check-size"><input value="true"  id="geo_power" name="geo_power" type="checkbox">  GEO POWER</label>
+                    </div>
+                    <div class="cont-check">
+                        <label for="tecnolite" class="form-label check-size"><input value="true" id="tecnolite" name ="tecnolite" type="checkbox">  TECNOLITE</label>
+                    </div>
+                    <div class="cont-check">
+                        <label for="philco" class="form-label check-size"><input value="true" id="philco" name="philco" type="checkbox">  PHILCO</label>
+                    </div>
+                    <div class="cont-check">
+                        <label for="boomer" class="form-label check-size"><input value="true" id="boomer" name="boomer" type="checkbox">  BOOMER</label>
+                    </div>
+                    <div class="cont-check">
+                        <label for="win_led" class="form-label check-size"><input value="true" id="win_led" name="win_led" type="checkbox">  WIN LED</label>
+                    </div>
+                    <div class="cont-check">
+                        <label for="arlite" class="form-label check-size"><input value="true"  id="arlite" name="arlite" type="checkbox">  ARLITE</label>
+                    </div>
+                    <div class="cont-check">
+                        <label for="lumiance" class="form-label check-size"><input value="true" id="lumiance" name="lumiance" type="checkbox">  LUMIANCE</label>
+                    </div>
+                    <div class="cont-check">
+                        <label for="led_vance" class="form-label check-size"><input value="true" id="led_vance" name="led_vance" type="checkbox">  LED VANCE</label>
+                    </div>
+                    <div class="cont-check">
+                        <label for="magg" class="form-label check-size"><input value="true" id="magg" name="magg" type="checkbox">  MAGG</label>
+                    </div>
+                    <div class="cont-check">
+                        <label for="energain" class="form-label check-size"><input value="true" id="energain" name="energain" type="checkbox">  ENERGAIN</label>
+                    </div>
+                    <div class="cont-check">
+                        <label for="otros" class="form-label check-size"><input value="true" id="otros" name="otros" type="checkbox">  OTROS</label>
+                    </div>
+
+                </div>
+                <div class="invalid-feedback">
+                    opcional (puedes seleccionar una o más opciones)
+                </div>
+
+                <div class="col-12">
+                    <label for="tamano_empresa" class="form-label wd-full">Número de empleados:</label>
+                    <select 
+                    autocomplete="off" 
+                    name="tamano_empresa">
+                        <option value="1" selected>SELECCIONA UNA OPCIÓN</option>
+                        <option value="10">HASTA 10 EMPLEADOS</option>
+                        <option value="50">HASTA 50 EMPLEADOS</option>
+                        <option value="250">HASTA 250 EMPLEADOS</option>
+                        <option value="251">MÁS DE 250 EMPLEADOS</option>
+                    </select>
+                </div>
+                <div class="invalid-feedback">
+
+                    {% if form.tamano_empresa.errors %}
+                        <p class="font-form font-alert-opcion">Opcional</p>
+                    {% else %}
+                        {{ form.tamano_empresa.errors }}
+                    {% endif %}
+
+
+                </div>
+                <b class="alert-form">________</b>
+                <b class="alert-form">campos obligatorios</b>
+                
+                <div class="btn_add_client--cont">
+                    <button type="submit" class="btn_add_client">Crear prospecto</button>
+                </div> 
+                
+            </form>
+        </section>
+    </div>
+</section>
+
+{% endblock %}

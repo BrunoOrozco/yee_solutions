@@ -1,0 +1,121 @@
+{% extends "ventas/base.html" %}
+{% load static %}
+{% block head_content %} 
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+<link rel="stylesheet" href='{% static "css/contactos-p.css" %}'>
+<link rel="stylesheet" href='{% static "css/contactos-d.css" %}' media="(min-width: 860px)">
+<title> {{ user.get_full_name }} | Yee Solutions</title>
+{% endblock %}  
+
+{% block container %}
+<section class="cont_main">
+    <div class="ct-hd">
+
+        <div class="card text-dark bg-light mb-3" style="max-width: 100;">
+            <div class="card-header" style="text-align: center;;"> <h5 class="card-title">{{ clientes.nombre_comercial | title }}</h5></div>
+            <div class="card-body">
+                
+                <div class="card-text">
+                        <p><b>ACTIVIDAD PRINCIPAL:</b> {{ clientes.actividad_principal | title }}</p>
+                        <p><b>GIRO: </b>{{ clientes.giro | title }}</p>
+                        {% if clientes.tamano_empresa == 10 %}
+                        <p><b>TAMAÑO: </b>Microempresa</p>
+                        {% elif clientes.tamano_empresa == 50 %}
+                        <p><b>TAMAÑO: </b>Empresa pequeña</p>
+                        {% elif clientes.tamano_empresa == 250 %}
+                        <p><b>TAMAÑO: </b>Empresa mediana</p>
+                        {% elif clientes.tamano_empresa == 251 %}
+                        <p><b>TAMAÑO: </b>Empresa grande</p>
+                        {% endif %}
+                </div>
+                <div class="contacto__infor--r">
+                    <p><b>STATUS:</b> {{ clientes.status | title }}</p>
+                </div>
+            </div>
+        </div>
+        <div class="cnt-bttn">
+            <a style="width: 40vw; max-width: 18rem;" class = "button-hd__space" href="{% url 'contacto__crear_contaccto' %}"> 
+                <button hr type="button" class="btn btn-outline-success">Crear contácto</button>
+            </a>
+            <a style="width: 40vw; max-width: 18rem;" class = "button-hd__space" href="mailto:bruno.orozco@ledsm.mx?subject=Solicitud:%20Modificación%20datos%20de%20prospecto%20&body=Hola%20soy%20{{ user.get_full_name }},%20requiero%20modificar%20los%20datos%20de%20{{ clientes.nombre_comercial | title }}%0D%0A%0D%0ALos%20datos%20deben%20ser%20los%20siguientes:%0D%0A%0D%0ANombre%20del%20comercio:%0D%0ARazón%20social:%0D%0ARFC:%0D%0AActividad%20principal:%0D%0AGiro:%0D%0AMarcas:%0D%0ANúmero%20de%20empleados:"> 
+                <button hr type="button" class="btn btn-outline-success">Modificar cliente</button>
+            </a>
+        </div>
+        <div class="cnt-bttn">
+            <a style="width: 40vw; max-width: 18rem;" class = "button-hd__space" href="{% url 'registrar_llamada' %}"> 
+                <button hr type="button" class="btn btn-outline-success">Registrar llamada</button>
+            </a>
+            <a style="width: 40vw;  max-width: 18rem;" class = "button-hd__space" href="{% url 'registrar_visita' %}"> 
+                <button hr type="button" class="btn btn-outline-success">Registrar visita</button>
+            </a>
+        </div>
+        <div>
+            <table class="table table-dark table-hover">
+                <thead>
+                    <tr>
+                        <th scope="col">Cargo</th>
+                        <th scope="col">Contácto</th>
+                        <th scope="col">Datos adicionales</th>
+                        <th scope="col">Télefono</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">Modificar</th>
+                        
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for list in contacto %}
+                    <tr>
+
+                        <td>
+                            <b>{{ list.cargo | title }}</b>
+                        </td>
+
+                        <td>
+                            <p class="none_mg">{{ list.nombre_contacto | title }}</p>
+                        </td>
+
+                        <td>
+                            <p class="none_mg">{{ list.datos_adicionales }}</p>
+                        </td>
+
+                        <td>
+                            <a class="clientes" href="tel:{{ list.numero_telefono }}">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-telephone-plus" viewBox="0 0 16 16">
+                                <path d="M3.654 1.328a.678.678 0 0 0-1.015-.063L1.605 2.3c-.483.484-.661 1.169-.45 1.77a17.568 17.568 0 0 0 4.168 6.608 17.569 17.569 0 0 0 6.608 4.168c.601.211 1.286.033 1.77-.45l1.034-1.034a.678.678 0 0 0-.063-1.015l-2.307-1.794a.678.678 0 0 0-.58-.122l-2.19.547a1.745 1.745 0 0 1-1.657-.459L5.482 8.062a1.745 1.745 0 0 1-.46-1.657l.548-2.19a.678.678 0 0 0-.122-.58L3.654 1.328zM1.884.511a1.745 1.745 0 0 1 2.612.163L6.29 2.98c.329.423.445.974.315 1.494l-.547 2.19a.678.678 0 0 0 .178.643l2.457 2.457a.678.678 0 0 0 .644.178l2.189-.547a1.745 1.745 0 0 1 1.494.315l2.306 1.794c.829.645.905 1.87.163 2.611l-1.034 1.034c-.74.74-1.846 1.065-2.877.702a18.634 18.634 0 0 1-7.01-4.42 18.634 18.634 0 0 1-4.42-7.009c-.362-1.03-.037-2.137.703-2.877L1.885.511z"/>
+                                <path fill-rule="evenodd" d="M12.5 1a.5.5 0 0 1 .5.5V3h1.5a.5.5 0 0 1 0 1H13v1.5a.5.5 0 0 1-1 0V4h-1.5a.5.5 0 0 1 0-1H12V1.5a.5.5 0 0 1 .5-.5z"/>
+                                </svg>
+                            </a>
+                        </td>
+
+
+
+                        <td>
+
+                        <a class="clientes" href="mailto:{{ list.email | lower  }}">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-envelope-plus" viewBox="0 0 16 16">
+                                <path d="M2 2a2 2 0 0 0-2 2v8.01A2 2 0 0 0 2 14h5.5a.5.5 0 0 0 0-1H2a1 1 0 0 1-.966-.741l5.64-3.471L8 9.583l7-4.2V8.5a.5.5 0 0 0 1 0V4a2 2 0 0 0-2-2H2Zm3.708 6.208L1 11.105V5.383l4.708 2.825ZM1 4.217V4a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v.217l-7 4.2-7-4.2Z"/>
+                                <path d="M16 12.5a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0Zm-3.5-2a.5.5 0 0 0-.5.5v1h-1a.5.5 0 0 0 0 1h1v1a.5.5 0 0 0 1 0v-1h1a.5.5 0 0 0 0-1h-1v-1a.5.5 0 0 0-.5-.5Z"/>
+                            </svg>
+                        </td>
+                        <td>
+                            <a class="clientes" href="mailto:bruno.orozco@ledsm.mx?subject=Solicitud:%20Modificación%20datos%20del%20contácto%20&body=Hola%20soy%20{{ user.get_full_name }},%20requiero%20modificar%20los%20datos%20del%20contacto%20{{ list.nombre_contacto | title }}%20que%20pertenece%20a%20{{ clientes.nombre_comercial | title }}%0D%0A%0D%0ACarglo:%0D%0ANombre%20completo%20del%20contácto:%0D%0ANúmero%20telefónico:%0D%0ACorreo%20electrónico:%0D%0ACargo:%0D%0ADatos%20adicionales:">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-plus" viewBox="0 0 16 16">
+                                    <path d="M6 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm4 8c0 1-1 1-1 1H1s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C9.516 10.68 8.289 10 6 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z"/>
+                                    <path fill-rule="evenodd" d="M13.5 5a.5.5 0 0 1 .5.5V7h1.5a.5.5 0 0 1 0 1H14v1.5a.5.5 0 0 1-1 0V8h-1.5a.5.5 0 0 1 0-1H13V5.5a.5.5 0 0 1 .5-.5z"/>
+                                </svg>
+                            </a>
+
+                        </td>
+
+
+
+                    </tr>
+                    {% endfor %}    
+                </tbody>
+            </table>
+
+        </div>
+
+    </div>
+</section>
+{% endblock %}

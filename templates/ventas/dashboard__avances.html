@@ -1,0 +1,97 @@
+{% extends "ventas/base.html" %}
+{% load static %}
+{% load mathfilters %}
+{% load humanize %}
+
+{% block head_content %} 
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+<link rel="stylesheet" href='{% static "css/dashboard-p.css" %}'>
+<link rel="stylesheet" href='{% static "css/dashboard-d.css" %}' media="(min-width: 860px)">
+<title>Avances | Yee Solutions</title>
+{% endblock %}  
+
+{% block container %}
+<section class="cont_main" oncontextmenu='return false' onkeydown='return false' onselectstart='return false' ondragstart="return false">
+    <div class="ct-hd">
+        <div class="card text-dark bg-light mb-3" style="max-width: 100;">
+            <div class="card-header" style="text-align: center;;"> <h5 class="card-title">{{ avance.cliente | title }}</h5></div>
+            <div class="card-body">
+                
+                <div class="card-text">
+                        <p><b>VENTA:</b> </p>
+                        <p><b>OBJETIVO: </b>{{ avance.objetivo }}</p>
+
+                </div>
+                <div class="contacto__infor--r">
+                    <p><b>GAP: {{ avance.califiacion }}</b></p>
+                </div>
+            </div>
+        </div>
+        
+        <h2 class="title subtitle">Avances por categoría</h2>
+        <div class="ctn-table">
+            <div class="scrolls">
+                <table class="table table-dark table-hover">
+                    <thead>
+                        <tr>
+                            <th style="background-color: #52bd0a;" scope="col">CATEGORIA</th>
+                            <th style="background-color: #52bd0a;" scope="col">OBJ</th>
+                            <th style="background-color: #52bd0a;" scope="col">VTA</th>
+                            <th style="background-color: #52bd0a;" scope="col">GAP</th>
+                            <th style="background-color: #52bd0a;" scope="col">%</th>
+                            <th style="background-color: #52bd0a;" scope="col">CAL</th>
+                            <th style="background-color: #52bd0a;" scope="col">PART</th>
+                        </tr>
+                    </thead>
+                        <tbody style="width: 90vw">
+                            {% for list in facturas_cliente %}
+                            <tr>
+                                <th scope="row">{{ list.fecha }}</th>
+                                <td >{{ list.sku }}</td>
+                                <td>{{ list.subtotal }}</td>
+                                <th>...</th>
+                                <td >...</td>
+                                <td>...</td>
+                                <td>...</td>
+                            </tr>
+                            {% endfor %}
+                           
+                        </tbody>
+                </table>
+            </div>
+        </div>
+        <h2 class="title subtitle">Avances por producto</h2>
+        <div class="ctn-table">
+            <div class="scrolls">
+                <table class="table table-dark table-hover">
+                    <thead>
+                        <tr>
+                            <th style="background-color: #52bd0a;" scope="col">PRODUCTOS</th>
+                            <th style="background-color: #52bd0a;" scope="col">OBJ</th>
+                            <th style="background-color: #52bd0a;" scope="col">VTA</th>
+                            <th style="background-color: #52bd0a;" scope="col">GAP</th>
+                            <th style="background-color: #52bd0a;" scope="col">%</th>
+                            <th style="background-color: #52bd0a;" scope="col">CAL</th>
+                            <th style="background-color: #52bd0a;" scope="col">PART</th>
+                        </tr>
+                    </thead>
+                        <tbody style="width: 90vw">
+                            <tr>
+                                <th scope="row">Contac...to</th>
+                                <td >...</td>
+                                <td>...</td>
+                                <th>...</th>
+                                <td >...</td>
+                                <td>...</td>
+                                <td>...</td>
+                            </tr>
+                           
+                        </tbody>
+                </table>
+            </div>
+        </div>
+
+
+    </div>
+</section>
+{% endblock %}

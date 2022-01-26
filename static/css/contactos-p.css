@@ -1,0 +1,111 @@
+.clientes {
+    color: rgb(255, 255, 255);
+    text-decoration: none;
+}
+
+.card-body {
+    display: flex;
+    justify-content: space-around;
+    font-size: 1.25rem;
+    color: #3e3e3e;
+}
+
+.table-dark {
+    font-size: 1.3rem;
+    
+}
+
+.card {
+    min-width: 185px;
+}
+
+.card-title {
+    font-size: 2rem;
+}
+
+.none_mg {
+    margin: 0;
+}
+
+.clientes:hover {
+    color: rgba(245, 245, 220, 0.90);
+}
+
+
+.contacto__title {
+    color: #000;
+    text-align: center;
+    font-size: 2.25rem;
+    margin: 1rem;
+}
+.contacto__info {
+    font-size: 1.5rem;
+    color: #202020cf;
+    margin: 0 2.5rem 0 2.5rem;
+    font-weight: bold;
+    justify-content: space-between;
+    display: flex;
+}
+
+.contacto__infor--r {
+    text-align: end;
+}
+
+.icon-return {
+    fill: #86ca12;
+    
+}
+
+.icon-return svg {
+    width: 3.5rem;
+    margin: 1rem;
+}
+.cont_main {
+    margin: 2rem;
+}
+.ct-hd {
+    width: 100%;
+}
+
+.cnt-bttn {
+    display: flex;
+    justify-content: center;
+}
+
+.btn {
+    background-color: #86ca12;
+    padding: 0.25rem 1rem;
+    color: #ffff;
+    border: none;
+    outline: 0px;
+    width: 100%;
+    font-size: 1.15rem;
+    border-radius: 1.1rem;
+}
+
+.btn:hover {
+    font-size: 1.4rem;
+    border: none;
+    outline: none;
+    background-color: #86ca12;
+}
+.btn:focus {
+    box-shadow: none;
+    outline: 0px;
+    border-color: 0px;
+}
+
+.btn-outline-secondary {
+    color: #ffff;
+    background: #17c50d;
+    border-color: #17c50d;
+}
+
+.btn-outline-secondary:hover {
+    background: #16b90d;
+    border-color: #16b90d;
+}
+
+.button-hd__space {
+    margin: 0 0.5rem 1rem;
+}

@@ -1,0 +1,47 @@
+{% load static %}
+<!DOCTYPE html>
+
+<html lang="es" href="qa-html-language-declarations.es">
+    <head>
+        {% block head_content %}{% endblock %}
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta property="og:title" content="Yee Solutions">
+        <meta property="og:type" content="website">
+        <meta property="og:description" content="En este sitio podrás realizar un registro de tus clientes y te mantendrás al día sobre tu desempeño en ventas.">
+
+
+
+        <link rel="stylesheet" type="text/css" href='{% static "css/template_phone.css" %}'>
+        <link rel="stylesheet" type="text/css" href='{% static "css/template_desktop.css" %}' media="(min-width: 860px)">
+        
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@500&display=swap" rel="stylesheet">
+        
+        <link rel="icon" href='{% static "/assets/icon.ico" %}'>
+        
+
+    </head>
+    
+    <body class="bg">
+                
+        {% include "ventas/nav.html" %}
+        <div class="bg__padding-top"></div>  
+            {% block container %}
+            {% endblock %}
+
+    <footer>
+    <span><a class="colcontact"
+        href="mailto:bruno.orozco@ledsm.mx">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="ico-sp" viewBox="0 0 16 16">
+            <path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1H2zm13 2.383-4.758 2.855L15 11.114v-5.73zm-.034 6.878L9.271 8.82 8 9.583 6.728 8.82l-5.694 3.44A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.739zM1 11.114l4.758-2.876L1 5.383v5.73z"/>
+        </svg>
+        Soporte Técnico</a></span>
+    </footer>
+        
+    </body>
+</html>

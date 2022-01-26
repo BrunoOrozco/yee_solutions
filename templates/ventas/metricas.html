@@ -1,0 +1,757 @@
+{% extends "ventas/base.html" %}
+{% load static %}
+{% load mathfilters %}
+{% block head_content %} 
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+<link rel="stylesheet" href='{% static "css/main_phone.css" %}'>
+<link rel="stylesheet" href='{% static "css/main_desktop.css" %}' media="(min-width: 860px)">
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/vue@2.6.14"></script>
+<script type="text/javascript" src='{% static "Js/moment.js" %}'></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+
+<title>Métricas | Yee Solutions</title>
+{% endblock %}
+
+{% block container %}
+<div id="app">
+  <div class="mn-ct">
+    <div class="main-container__mg-top">
+      <h2 class="main-container__title">Hola, {{ user.first_name }}</h2>
+      <p class="main-container__subtitle" >Estas son tus métricas del mes de <b id="cuenta"></b></p>
+      
+    </div>
+    <!--
+    
+      <div class="table-container">
+          <h2 class="table-container__title">
+              Mis resultados
+          </h2>
+          <div class="table">
+              <table>
+                  <tr>
+                      <td class="table__column-l top-cell">
+                      <span>Objetivo mensual</span>
+                      </td>
+                      <td class="table__column-r top-cell">
+                      <span></sapn>
+                      </td>
+                  </tr>
+                  
+                  <tr>
+                      
+                      <td class="table__column-l">
+                      Ventas del mes
+                      </td>
+                      
+                      <td class="table__column-r">
+                      <span> </span>
+                      </td>
+                  </tr>
+                  <tr>
+                      
+                      <td class="table__column-l">
+                      Avance
+                      </td>
+                     
+                      <td class="table__column-r">
+                      <span> </span>
+                      </td>
+                  </tr>
+                  <tr>
+                      
+                      <td class="table__column-l">
+                      Objetivo diario
+                      </td>
+                      
+                      <td class="table__column-r">
+                      <span> </span>
+                      </td>
+                  </tr>
+                  <tr>
+                      
+                      <td class="table__column-l">
+                      Venta del día
+                      </td>
+                   
+                      <td class="table__column-r">
+                      <span> </span>
+                      </td>
+                  </tr>
+
+                  <tr class="table__column--rownonborder">
+                      <td class="table__column-l bttn-cell">
+                      Avance
+                      </td>
+                      <td class="table__column-r bttn-cell">
+                        <span></span>
+                      </td>
+                  </tr>
+              </table>
+          </div>
+      </div>
+      -->
+      
+    <section class="main-container">
+        <div class="table-container">
+          <h2 class="table-container__title">Actividad diaria</h2>
+          <div class="table">
+              <table class="style-table__supreme">
+                  <!-- Row top-->
+                  <tr>
+                    <!--First Value-->
+                    <td class="table__column-l top-cell">
+                      <b>Llamadas</b>
+                    </td>
+                    <!--Second Value--> 
+                    <td class="table__column-h">
+                      <b>Objetivo</b>
+                    </td>
+                    <!--Third value-->
+                    <td class="table__column-h">
+                      <b>Actividad</b>
+                    </td>
+                    <!--Fourth value-->
+                    <td class="table__column-h top-cell">
+                      <b>Avance</b>
+                    </td>
+                  </tr>
+                  <!-- Rows-->
+                  <tr>
+                    <!--First Value-->
+                    <td class="table__column-l">
+                      <span>Prospección</span>
+                    </td>
+                    <!--Second Value-->
+                    <td class="table__column-r">
+                      {% if vendedor == 'C' %}
+                      <span>12</span>
+                      {% elif vendedor == 'B' %}
+                      <span>4</span>
+                      {% elif vendedor == 'A' %}
+                      <span>2</span>
+                      {% endif %}
+                    </td>
+                    <!--Third Value-->
+                    <td class="table__column-r">
+                      <span>{{ llamadas_prospeccionDiaria }}</span>
+                    </td>
+                    <td class="table__column-r">
+                    <!--Fourth value-->
+                      {% if vendedor == 'C' %}
+                      <span>{{ llamadas_prospeccionDiaria|mul:100|div:12|floatformat:"1" }}%</span>
+                      {% elif vendedor == 'B' %}
+                      <span>{{ llamadas_prospeccionDiaria|mul:100|div:14|floatformat:"1" }}%</span>
+                      {% elif vendedor == 'A' %}
+                      <span>{{ llamadas_prospeccionDiaria|mul:100|div:2|floatformat:"1" }}%</span>
+                      {% endif %}
+                    </td>
+                  </tr>
+                  <!-- Rows-->
+                  <tr>
+                    <!--First Value-->
+                    <td class="table__column-l">
+                      <span>Citas</span>
+                    </td>
+                    <!--Second Value-->
+                    <td class="table__column-r">
+                      {% if vendedor == 'C' %}
+                      <span>14</span>
+                      {% elif vendedor == 'B' %}
+                      <span>8</span>
+                      {% elif vendedor == 'A' %}
+                      <span>4</span>
+                      {% endif %}
+                    </td>
+                    <!--Third Value-->
+                    <td class="table__column-r">
+                      <span>{{ llamadas_citaDiaria }}</span>
+                    </td>
+                    <td class="table__column-r">
+                      {% if vendedor == 'C' %}
+                      <span>{{ llamadas_citaDiaria|mul:100|div:14|floatformat:"1" }}%</span>
+                      {% elif vendedor == 'B' %}
+                      <span>{{ llamadas_citaDiaria|mul:100|div:8|floatformat:"1" }}%</span>
+                      {% elif vendedor == 'A' %}
+                      <span>{{ llamadas_citaDiaria|mul:100|div:4|floatformat:"1" }}%</span>
+                      {% endif %}
+                    </td>
+                  </tr>
+                  <!-- Rows-->
+                  <tr>
+                    <!--First Value-->
+                    <td class="table__column-l">
+                      <span>Seguimiento</span>
+                    </td>
+                    <!--Second Value-->
+                    <td class="table__column-r">
+                      {% if vendedor == 'C' %}
+                      <span>16</span>
+                      {% elif vendedor == 'B' %}
+                      <span>10</span>
+                      {% elif vendedor == 'A' %}
+                      <span>5</span>
+                      {% endif %}
+                    </td>
+                    <!--Third Value-->
+                    <td class="table__column-r">
+                      <span>{{ llamadas_seguimientoDiaria }}</span>
+                    </td>
+                    <td class="table__column-r">
+                    <!--Fourth value-->
+                      {% if vendedor == 'C' %}
+                      <span>{{ llamadas_seguimientoDiaria|mul:100|div:16|floatformat:"1" }}%</span>
+                      {% elif vendedor == 'B' %}
+                      <span>{{ llamadas_seguimientoDiaria|mul:100|div:10|floatformat:"1" }}%</span>
+                      {% elif vendedor == 'A' %}
+                      <span>{{ llamadas_seguimientoDiaria|mul:100|div:5|floatformat:"1" }}%</span>
+                      {% endif %}
+                    </td>
+                  </tr>
+                  <!--Row bottom-->
+                  <tr class="table__column--rownonborder">
+                    <!--First Value-->
+                    <td class="table__column-l bttn-cell">
+                      Cierre
+                    </td>
+                    <!--Second Value-->
+                    <td class="table__column-r">
+                      {% if vendedor == 'C' %}
+                      <span>1</span>
+                      {% elif vendedor == 'B' %}
+                      <span>1</span>
+                      {% elif vendedor == 'A' %}
+                      <span>1</span>
+                      {% endif %}
+                    </td>
+                    <!--Third Value-->
+                    <td class="table__column-r">
+                      <span>{{ llamadas_cierreDiaria }}</span>
+                    </td>
+                    <!--Fourth Value-->
+                    <td class="table__column-r bttn-cell">
+                      {% if vendedor == 'C' %}
+                      <span>{{ llamadas_cierreDiaria|mul:100|div:1|floatformat:"1" }}%</span>
+                      {% elif vendedor == 'B' %}
+                      <span>{{ llamadas_cierreDiaria|mul:100|div:1|floatformat:"1" }}%</span>
+                      {% elif vendedor == 'A' %}
+                      <span>{{ llamadas_cierreDiaria|mul:100|div:1|floatformat:"1" }}%</span>
+                      {% endif %}
+                    </td>
+                  </tr>
+                <table>
+                  <tr>
+                    <!--First Value-->
+                    <td class="table__column-l top-cell">
+                      <b>Visitas</b>
+                    </td>
+                    <!--Second Value--> 
+                    <td class="table__column-h">
+                      <b>Objetivo</b>
+                    </td>
+                    <!--Third value-->
+                    <td class="table__column-h">
+                      <b>Actividad</b>
+                    </td>
+                    <!--Fourth value-->
+                    <td class="table__column-h top-cell">
+                      <b>Avance</b>
+                    </td>
+                  </tr>
+                  <!-- Rows-->
+                  <tr>
+                    <!--First Value-->
+                    <td class="table__column-l">
+                      <span>Prospección</span>
+                    </td>
+                    <!--Second Value-->
+                    <td class="table__column-r">
+                      {% if vendedor == 'C' %}
+                      <span>4</span>
+                      {% elif vendedor == 'B' %}
+                      <span>2</span>
+                      {% elif vendedor == 'A' %}
+                      <span>1</span>
+                      {% endif %}
+                    </td>
+                    <!--Third Value-->
+                    <td class="table__column-r">
+                      <span>{{ visitas_prospeccionDiaria }}</span>
+                    </td>
+                    <td class="table__column-r">
+                    <!--Fourth value-->
+                      {% if vendedor == 'C' %}
+                      <span>{{ visitas_prospeccionDiaria|mul:100|div:4|floatformat:"1" }}%</span>
+                      {% elif vendedor == 'B' %}
+                      <span>{{ visitas_prospeccionDiaria|mul:100|div:2|floatformat:"1" }}%</span>
+                      {% elif vendedor == 'A' %}
+                      <span>{{ visitas_prospeccionDiaria|mul:100|div:1|floatformat:"1" }}%</span>
+                      {% endif %}
+                    </td>
+                  </tr>
+                  <!-- Rows-->
+                  <tr>
+                    <!--First Value-->
+                    <td class="table__column-l">
+                      <span>Presentaciones</span>
+                    </td>
+                    <!--Second Value-->
+                    <td class="table__column-r">
+                      {% if vendedor == 'C' %}
+                      <span>2</span>
+                      {% elif vendedor == 'B' %}
+                      <span>2</span>
+                      {% elif vendedor == 'A' %}
+                      <span>3</span>
+                      {% endif %}
+                    </td>
+                    <!--Third Value-->
+                    <td class="table__column-r">
+                      <span>{{ visitas_citaDiaria }}</span>
+                    </td>
+                    <td class="table__column-r">
+                    <!--Fourth value-->
+                      {% if vendedor == 'C' %}
+                      <span>{{ visitas_citaDiaria|mul:100|div:2|floatformat:"1" }}%</span>
+                      {% elif vendedor == 'B' %}
+                      <span>{{ visitas_citaDiaria|mul:100|div:2|floatformat:"1" }}%</span>
+                      {% elif vendedor == 'A' %}
+                      <span>{{ visitas_citaDiaria|mul:100|div:3|floatformat:"1" }}%</span>
+                      {% endif %}
+                    </td>
+                  </tr>
+                  <!-- Rows-->
+                  <tr>
+                    <!--First Value-->
+                    <td class="table__column-l">
+                      <span>Saludo</span>
+                    </td>
+                    <!--Second Value-->
+                    <td class="table__column-r">
+                      {% if vendedor == 'C' %}
+                      <span>1</span>
+                      {% elif vendedor == 'B' %}
+                      <span>2</span>
+                      {% elif vendedor == 'A' %}
+                      <span>1</span>
+                      {% endif %}
+                    </td>
+                    <!--Third Value-->
+                    <td class="table__column-r">
+                      <span>{{ visitas_saludoDiaria }}</span>
+                    </td>
+                    <td class="table__column-r">
+                      {% if vendedor == 'C' %}
+                      <span>{{ visitas_citaDiaria|mul:100|div:1|floatformat:"1" }}%</span>
+                      {% elif vendedor == 'B' %}
+                      <span>{{ visitas_citaDiaria|mul:100|div:2|floatformat:"1" }}%</span>
+                      {% elif vendedor == 'A' %}
+                      <span>{{ visitas_citaDiaria|mul:100|div:1|floatformat:"1" }}%</span>
+                      {% endif %}
+                    </td>
+                  </tr>
+
+                  <!--Row bottom-->
+                  <tr >
+                    <!--First Value-->
+                    <td class="table__column-l">
+                      Cierre
+                    </td>
+                    <!--Second Value-->
+                    <td class="table__column-r">
+                      {% if vendedor == 'C' %}
+                      <span>1</span>
+                      {% elif vendedor == 'B' %}
+                      <span>2</span>
+                      {% elif vendedor == 'A' %}
+                      <span>1</span>
+                      {% endif %}
+                    </td>
+                    <!--Third Value-->
+                    <td class="table__column-r">
+                      <span>{{ visitas_cierreDiaria }}</span>
+                    </td>
+                    <!--Fourth Value-->
+                    <td class="table__column-r">
+                      {% if vendedor == 'C' %}
+                      <span>{{ visitas_cierreDiaria|mul:100|div:1|floatformat:"1" }}%</span>
+                      {% elif vendedor == 'B' %}
+                      <span>{{ visitas_cierreDiaria|mul:100|div:2|floatformat:"1" }}%</span>
+                      {% elif vendedor == 'A' %}
+                      <span>{{ visitas_cierreDiaria|mul:100|div:1|floatformat:"1" }}%</span>
+                      {% endif %}
+                    </td>
+                  </tr>
+                  <tr class="table__column--rownonborder">
+                    <!--First Value-->
+                    <td class="table__column-l bttn-cell">
+                      Propuestas
+                    </td>
+                    <!--Second Value-->
+                    <td class="table__column-r">
+                      {% if vendedor == 'C' %}
+                      <span>1</span>
+                      {% elif vendedor == 'B' %}
+                      <span>2</span>
+                      {% elif vendedor == 'A' %}
+                      <span>1</span>
+                      {% endif %}
+                    </td>
+                    <!--Third Value-->
+                    <td class="table__column-r">
+                      <span>{{ visitas_propuestaDiaria }}</span>
+                    </td>
+                    <!--Fourth Value-->
+                    <td class="table__column-r bttn-cell">
+                      {% if vendedor == 'C' %}
+                      <span>{{ visitas_propuestaDiaria|mul:100|div:1|floatformat:"1" }}%</span>
+                      {% elif vendedor == 'B' %}
+                      <span>{{ visitas_propuestaDiaria|mul:100|div:2|floatformat:"1" }}%</span>
+                      {% elif vendedor == 'A' %}
+                      <span>{{ visitas_propuestaDiaria|mul:100|div:1|floatformat:"1" }}%</span>
+                      {% endif %}
+                    </td>
+                  </tr>
+
+              </table>
+          </div>
+      </div>
+      <div class="table-container">
+          <h2 class="table-container__title">Actividad del mes</h2>
+          <div class="table">
+              <table class="style-table__supreme">
+                  <!-- Row top-->
+                  <tr>
+                    <!--First Value-->
+                    <td class="table__column-l top-cell">
+                      <b>Llamadas</b>
+                    </td>
+                    <!--Second Value--> 
+                    <td class="table__column-h">
+                      <b>Objetivo</b>
+                    </td>
+                    <!--Third value-->
+                    <td class="table__column-h">
+                      <b>Actividad</b>
+                    </td>
+                    <!--Fourth value-->
+                    <td class="table__column-h top-cell">
+                      <b>Avance</b>
+                    </td>
+                  </tr>
+                  <!-- Rows-->
+                  <tr>
+                    <!--First Value-->
+                    <td class="table__column-l">
+                      <span>Prospección</span>
+                    </td>
+                    <td class="table__column-r">
+                      {% if vendedor == 'C' %}
+                      <span>240</span>
+                      {% elif vendedor == 'B' %}
+                      <span>80</span>
+                      {% elif vendedor == 'A' %}
+                      <span>40</span>
+                      {% endif %}
+                    </td>
+                    <!--Third Value-->
+                    <td class="table__column-r">
+                      {{ llamadas_prospeccion }}
+                    </td>
+                    <td class="table__column-r">
+                      {% if vendedor == 'C' %}
+                      <span>{{ llamadas_prospeccion|mul:100|div:240|floatformat:"1" }}%</span>
+                      {% elif vendedor == 'B' %}
+                      <span>{{ llamadas_prospeccion|mul:100|div:80|floatformat:"1" }}%</span>
+                      {% elif vendedor == 'A' %}
+                      <span>{{ llamadas_prospeccion|mul:100|div:40|floatformat:"1" }}%</span>
+                      {% endif %}
+                    </td>
+
+                    <!--Fourth value-->
+                   
+                  </tr>
+                  <!-- Rows-->
+                  <tr>
+                    <!--First Value-->
+                    <td class="table__column-l">
+                      <span>Citas</span>
+                    </td>
+                    <!--Second Value-->
+                    <td class="table__column-r">
+                      {% if vendedor == 'C' %}
+                      <span>280</span>
+                      {% elif vendedor == 'B' %}
+                      <span>160</span>
+                      {% elif vendedor == 'A' %}
+                      <span>80</span>
+                      {% endif %}
+                    </td>
+                    <!--Third Value-->
+                    <td class="table__column-r">
+                      <span>{{ llamadas_cita }}</span>
+                    </td>
+                    <td class="table__column-r">
+                      {% if vendedor == 'C' %}
+                      <span>{{ llamadas_cita|mul:100|div:280|floatformat:"1" }}%</span>
+                      {% elif vendedor == 'B' %}
+                      <span>{{ llamadas_cita|mul:100|div:160|floatformat:"1" }}%</span>
+                      {% elif vendedor == 'A' %}
+                      <span>{{ llamadas_cita|mul:100|div:80|floatformat:"1" }}%</span>
+                      {% endif %}
+                    </td>
+                  </tr>
+                  <!-- Rows-->
+                  <tr>
+                    <!--First Value-->
+                    <td class="table__column-l">
+                      <span>Seguimiento</span>
+                    </td>
+                    <!--Second Value-->
+                    <td class="table__column-r">
+                      {% if vendedor == 'C' %}
+                      <span>312</span>
+                      {% elif vendedor == 'B' %}
+                      <span>208</span>
+                      {% elif vendedor == 'A' %}
+                      <span>104</span>
+                      {% endif %}
+                    </td>
+                    <!--Third Value-->
+                    <td class="table__column-r">
+                      <span>{{ llamadas_seguimiento }}</span>
+                    </td>
+                    <td class="table__column-r">
+                      {% if vendedor == 'C' %}
+                      <span>{{ llamadas_seguimiento|mul:100|div:312|floatformat:"1" }}%</span>
+                      {% elif vendedor == 'B' %}
+                      <span>{{ llamadas_seguimiento|mul:100|div:208|floatformat:"1" }}%</span>
+                      {% elif vendedor == 'A' %}
+                      <span>{{ llamadas_seguimiento|mul:100|div:104|floatformat:"1" }}%</span>
+                      {% endif %}
+                    </td>
+                  </tr>
+                  <!--Row bottom-->
+                  <tr class="table__column--rownonborder">
+                    <!--First Value-->
+                    <td class="table__column-l bttn-cell">
+                      Cierre
+                    </td>
+                    <!--Second Value-->
+                    <td class="table__column-r">
+                      {% if vendedor == 'C' %}
+                      <span>24</span>
+                      {% elif vendedor == 'B' %}
+                      <span>8</span>
+                      {% elif vendedor == 'A' %}
+                      <span>4</span>
+                      {% endif %}
+                    </td>
+                    <!--Third Value-->
+                    <td class="table__column-r">
+                      <span>{{ llamadas_cierre }}</span>
+                    </td>
+                    <!--Fourth Value-->
+                    <td class="table__column-r bttn-cell">
+                      {% if vendedor == 'C' %}
+                      <span>{{ llamadas_cierre|mul:100|div:24|floatformat:"1" }}%</span>
+                      {% elif vendedor == 'B' %}
+                      <span>{{ llamadas_cierre|mul:100|div:8|floatformat:"1" }}%</span>
+                      {% elif vendedor == 'A' %}
+                      <span>{{ llamadas_cierre|mul:100|div:4|floatformat:"1" }}%</span>
+                      {% endif %}
+                    </td>
+                  </tr>
+                <table>
+                  <tr>
+                    <!--First Value-->
+                    <td class="table__column-l top-cell">
+                      <b>Visitas</b>
+                    </td>
+                    <!--Second Value--> 
+                    <td class="table__column-h">
+                      <b>Objetivo</b>
+                    </td>
+                    <!--Third value-->
+                    <td class="table__column-h">
+                      <b>Actividad</b>
+                    </td>
+                    <!--Fourth value-->
+                    <td class="table__column-h top-cell">
+                      <b>Avance</b>
+                    </td>
+                  </tr>
+                  <!-- Rows-->
+                  <tr>
+                    <!--First Value-->
+                    <td class="table__column-l">
+                      <span>Prospección</span>
+                    </td>
+                    <!--Second Value-->
+                    <td class="table__column-r">
+                      {% if vendedor == 'C' %}
+                      <span>80</span>
+                      {% elif vendedor == 'B' %}
+                      <span>40</span>
+                      {% elif vendedor == 'A' %}
+                      <span>20</span>
+                      {% endif %}
+                    </td>
+                    <!--Third Value-->
+                    <td class="table__column-r">
+                      <span>{{ visitas_prospeccion }}</span>
+                    </td>
+                    <td class="table__column-r">
+                      {% if vendedor == 'C' %}
+                      <span>{{ visitas_prospeccion|mul:100|div:80|floatformat:"1" }}%</span>
+                      {% elif vendedor == 'B' %}
+                      <span>{{ visitas_prospeccion|mul:100|div:40|floatformat:"1" }}%</span>
+                      {% elif vendedor == 'A' %}
+                      <span>{{ visitas_prospeccion|mul:100|div:20|floatformat:"1" }}%</span>
+                      {% endif %}
+                    </td>
+                  </tr>
+                  <!-- Rows-->
+                  <tr>
+                    <!--First Value-->
+                    <td class="table__column-l">
+                      <span>Presentaciones</span>
+                    </td>
+                    <!--Second Value-->
+                    <td class="table__column-r">
+                      {% if vendedor == 'C' %}
+                      <span>40</span>
+                      {% elif vendedor == 'B' %}
+                      <span>40</span>
+                      {% elif vendedor == 'A' %}
+                      <span>60</span>
+                      {% endif %}
+                    </td>
+                    <!--Third Value-->
+                    <td class="table__column-r">
+                      <span>{{ visitas_cita }}</span>
+                    </td>
+                    <td class="table__column-r">
+                      {% if vendedor == 'C' %}
+                      <span>{{ visitas_cita|mul:100|div:40|floatformat:"1" }}%</span>
+                      {% elif vendedor == 'B' %}
+                      <span>{{ visitas_cita|mul:100|div:40|floatformat:"1" }}%</span>
+                      {% elif vendedor == 'A' %}
+                      <span>{{ visitas_cita|mul:100|div:60|floatformat:"1" }}%</span>
+                      {% endif %}
+                    </td>
+                  </tr>
+                  <!-- Rows-->
+                  <tr>
+                    <!--First Value-->
+                    <td class="table__column-l">
+                      <span>Saludo</span>
+                    </td>
+                    <!--Second Value-->
+                    <td class="table__column-r">
+                      {% if vendedor == 'C' %}
+                      <span>20</span>
+                      {% elif vendedor == 'B' %}
+                      <span>40</span>
+                      {% elif vendedor == 'A' %}
+                      <span>20</span>
+                      {% endif %}
+                    </td>
+                    <!--Third Value-->
+                    <td class="table__column-r">
+                      <span>{{ visitas_saludo }}</span>
+                    </td>
+                    <td class="table__column-r">
+                      {% if vendedor == 'C' %}
+                      <span>{{ visitas_saludo|mul:100|div:20|floatformat:"1" }}%</span>
+                      {% elif vendedor == 'B' %}
+                      <span>{{ visitas_saludo|mul:100|div:40|floatformat:"1" }}%</span>
+                      {% elif vendedor == 'A' %}
+                      <span>{{ visitas_saludo|mul:100|div:20|floatformat:"1" }}%</span>
+                      {% endif %}
+                    </td>
+                  </tr>
+
+                  <!--Row bottom-->
+                  <tr >
+                    <!--First Value-->
+                    <td class="table__column-l">
+                      Cierre
+                    </td>
+                    <!--Second Value-->
+                    <td class="table__column-r">
+                      {% if vendedor == 'C' %}
+                      <span>20</span>
+                      {% elif vendedor == 'B' %}
+                      <span>40</span>
+                      {% elif vendedor == 'A' %}
+                      <span>20</span>
+                      {% endif %}
+                    </td>
+                    <!--Third Value-->
+                    <td class="table__column-r">
+                      <span>{{ visitas_cierre }}</span>
+                    </td>
+                    <!--Fourth Value-->
+                    <td class="table__column-r">
+                      {% if vendedor == 'C' %}
+                      <span>{{ visitas_cierre|mul:100|div:20|floatformat:"1" }}%</span>
+                      {% elif vendedor == 'B' %}
+                      <span>{{ visitas_cierre|mul:100|div:40|floatformat:"1" }}%</span>
+                      {% elif vendedor == 'A' %}
+                      <span>{{ visitas_cierre|mul:100|div:20|floatformat:"1" }}%</span>
+                      {% endif %}
+                    </td>
+                  </tr>
+                  <tr class="table__column--rownonborder">
+                    <!--First Value-->
+                    <td class="table__column-l bttn-cell">
+                      Propuestas
+                    </td>
+                    <!--Second Value-->
+                    <td class="table__column-r">
+                      {% if vendedor == 'C' %}
+                      <span>20</span>
+                      {% elif vendedor == 'B' %}
+                      <span>28</span>
+                      {% elif vendedor == 'A' %}
+                      <span>14</span>
+                      {% endif %}
+                    </td>
+                    <!--Third Value-->
+                    <td class="table__column-r">
+                      <span>{{ visitas_propuesta }}</span>
+                    </td>
+                    <!--Fourth Value-->
+                    <td class="table__column-r bttn-cell">
+                      {% if vendedor == 'C' %}
+                      <span>{{ visitas_propuesta|mul:100|div:20|floatformat:"1" }}%</span>
+                      {% elif vendedor == 'B' %}
+                      <span>{{ visitas_propuesta|mul:100|div:40|floatformat:"1" }}%</span>
+                      {% elif vendedor == 'A' %}
+                      <span>{{ visitas_propuesta|mul:100|div:20|floatformat:"1" }}%</span>
+                      {% endif %}
+                    </td>
+                  </tr>
+
+              </table>
+          </div>
+      </div>
+      
+
+    </section>
+
+
+<script type="text/javascript">
+mensaje =  moment().format('MMMM')
+
+resultD = document.getElementById('cuenta').innerHTML = mensaje;
+</script>
+
+
+</div>
+
+      
+
+{% endblock %}
+
